@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
   });
 
   connections += 1;
+  console.log(connections);
 });
 
 server.listen(port, () => {
