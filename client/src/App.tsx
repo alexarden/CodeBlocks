@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+import { Button } from 'react-bootstrap'
 import { socket } from './service/service'
-
+import { useEffect, useState } from 'react'
+import Mentor from './Mentor'
+import Student from './Student'
 function App() {
-  const [code, setCode] = useState('Hello there :)');
 
-  useEffect(() => {
-    socket.on("codeUpdate", (newCode) => {
-      console.log('Code from server arrived');
-      setCode(newCode);
-    });
-  }, []);
+    const [connections, setConnectios] = useState(0)
 
-  const onChange = React.useCallback((value: any) => {
-    socket.emit('edit', value)
-  }, []);
+    useEffect(() => {
+        socket.emit('connections')
+        socket.on('connections-response', (connectiosResponse) => {
+            console.log(connectiosResponse)
+            setConnectios(connectiosResponse)
+        })
+    }, [])
 
-  return (
-    <div>
-      <CodeMirror
-        value={code}
-        height="200px"
-        extensions={[javascript({ jsx: true })]}
-        onChange={onChange}
-      />
-    </div>
-  );
+    const handleClick = () => {
+        socket.emit('connections')
+    }
+
+    return (
+        <div>
+            {connections === 1 ? <Mentor /> : <Student />}
+        </div>
+    );
 }
-export default App;
+export default App; 

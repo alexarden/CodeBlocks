@@ -15,13 +15,25 @@ const io = new Server(server, {
 });
 
 let sharedCode = "";
+let connections = 0;
 
 io.on("connection", (socket) => {
   socket.on("edit", (newCode) => {
     // Update the shared code and broadcast the changes
     sharedCode = newCode;
-    socket.emit("codeUpdate", sharedCode);
+    socket.broadcast.emit("codeUpdate", sharedCode);
   });
+
+  socket.on("connections", () => {
+    socket.emit("connections-response", connections);
+  });
+
+  socket.on("disconnect", () => {
+    connections -= 1;
+    console.log("connections: ", connections);
+  });
+
+  connections += 1;
 });
 
 server.listen(port, () => {
