@@ -1,36 +1,31 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
 import { socket } from './service/service'
-import './App.scss';
-import { Controlled as CodeMirror } from "react-codemirror2";
 
-const CodeEditor = () => {
-  const [code, setCode] = useState("");
+function App() {
+  const [code, setCode] = useState('Hello there :)');
 
   useEffect(() => {
     socket.on("codeUpdate", (newCode) => {
+      console.log('Code from server arrived');
       setCode(newCode);
     });
   }, []);
 
-  const handleCodeChange = (editor: any, data: any, newCode: any) => {
-    // Send the newCode to the server for broadcasting
-    socket.emit("edit", newCode);
-  };
+  const onChange = React.useCallback((value: any) => {
+    socket.emit('edit', value)
+  }, []);
 
   return (
     <div>
-      Hey
       <CodeMirror
         value={code}
-        onBeforeChange={handleCodeChange}
-        options={{
-          mode: "javascript",
-          theme: "material",
-          lineNumbers: true,
-        }}
+        height="200px"
+        extensions={[javascript({ jsx: true })]}
+        onChange={onChange}
       />
     </div>
   );
-};
-
-export default CodeEditor;
+}
+export default App;

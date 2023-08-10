@@ -14,9 +14,13 @@ const io = new Server(server, {
   },
 });
 
+let sharedCode = "";
+
 io.on("connection", (socket) => {
-  socket.on("message", (data) => {
-    console.log(data);
+  socket.on("edit", (newCode) => {
+    // Update the shared code and broadcast the changes
+    sharedCode = newCode;
+    socket.emit("codeUpdate", sharedCode);
   });
 });
 
