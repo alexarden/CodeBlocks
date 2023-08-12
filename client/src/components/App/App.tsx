@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     socket.emit("connections");
+    socket.emit("codeBlocks");
     socket.on("connections-response", (connectiosResponse) => {
       console.log("connections: ", connectiosResponse);
       setConnectios(connectiosResponse);
@@ -24,10 +25,6 @@ function App() {
       }
     });
   }, []);
-
-  // useEffect(() => {
-  //   window.sessionStorage.setItem("role", role);
-  // }, [role]);
 
   const handleClick = () => {
     socket.emit("connections");
