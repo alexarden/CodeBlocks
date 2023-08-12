@@ -21,6 +21,7 @@ io.on("connection", (socket) => {
   socket.on("edit", (newCode) => {
     // Update the shared code and broadcast the changes
     sharedCode = newCode;
+    socket.emit("codeUpdate", sharedCode);
     socket.broadcast.emit("codeUpdate", sharedCode);
   });
 
@@ -30,11 +31,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     connections -= 1;
-    console.log("connections: ", connections);
   });
 
   connections += 1;
-  console.log(connections);
+  console.log("connections: ", connections);
 });
 
 server.listen(port, () => {

@@ -10,9 +10,21 @@ function Mentor() {
   const [role, setRole] = useState("Mentor");
 
   useEffect(() => {
+    try {
+      const savedCode = sessionStorage.getItem("code");
+      if (savedCode) {
+        setCode(JSON.parse(savedCode));
+      } else {
+        setCode("No code saved.");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
     socket.on("codeUpdate", (newCode: any) => {
       console.log("Code from server arrived");
       setCode(newCode);
+      sessionStorage.setItem("code", JSON.stringify(newCode));
     });
   }, []);
 
