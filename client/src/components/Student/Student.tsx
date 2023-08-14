@@ -6,6 +6,7 @@ import ChooseCode from "../ChooseCode/ChooseCode";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceLaughBeam } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   width: 800px;
@@ -31,7 +32,7 @@ function CodeEditor() {
       if (savedCode) {
         setCode(JSON.parse(savedCode));
       } else {
-        setCode("No new code");
+        setCode("Enter you answer here...");
       }
     } catch (e) {
       console.log(e);
@@ -55,6 +56,10 @@ function CodeEditor() {
 
   const propSetCodeBlocks = (codeBlocks: any) => {
     setCodeBlocks(codeBlocks);
+  };
+
+  const handleClick = () => {
+    setCode(codeBlocks.code);
   };
 
   return codeBlocks === null ? (
@@ -82,6 +87,10 @@ function CodeEditor() {
         ) : (
           <></>
         )}
+
+        <Button variant="success" onClick={handleClick}>
+          Solution
+        </Button>
       </div>
 
       <CodeMirror

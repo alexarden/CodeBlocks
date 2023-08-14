@@ -6,8 +6,10 @@ import "../App/App.scss";
 
 const CodeBlock = styled.div`
   margin: 16px;
-  padding: 16px;
   text-align: center;
+  button {
+    width: 110px;
+  }
 `;
 
 function CodeEditor(props: any) {
@@ -48,6 +50,14 @@ function CodeEditor(props: any) {
 
   return thisCodeBlocks ? (
     <>
+      <div
+        className="title"
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Pick A Challenge
+      </div>
       {thisCodeBlocks.map((block: any) => (
         <CodeBlock key={block._id} data-id={block._id}>
           <Button

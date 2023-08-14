@@ -24,7 +24,7 @@ function Mentor() {
       if (savedCode) {
         setCode(JSON.parse(savedCode));
       } else {
-        setCode("No code saved.");
+        setCode("Waiting for student to start typing...");
       }
     } catch (e) {
       console.log(e);
