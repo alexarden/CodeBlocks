@@ -25,8 +25,6 @@ function CodeEditor() {
   const [codeBlocks, setCodeBlocks] = useState<any>(null);
 
   useEffect(() => {
-    console.log(codeBlocks);
-
     try {
       const savedCode = sessionStorage.getItem("code");
       if (savedCode) {
@@ -44,7 +42,6 @@ function CodeEditor() {
     }
 
     socket.on("codeUpdate", (newCode) => {
-      console.log("Code from server arrived");
       setCode(newCode);
       sessionStorage.setItem("code", JSON.stringify(newCode));
     });
@@ -60,6 +57,7 @@ function CodeEditor() {
 
   const handleClick = () => {
     setCode(codeBlocks.code);
+    socket.emit("edit", codeBlocks.code);
   };
 
   return codeBlocks === null ? (

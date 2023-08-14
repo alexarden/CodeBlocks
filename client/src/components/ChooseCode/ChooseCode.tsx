@@ -30,17 +30,11 @@ function CodeEditor(props: any) {
     }
     socket.emit("code-blocks");
     socket.on("code-blocks-response", (codeBlocks) => {
-      console.log("Code blocks from server arrived");
       setThisCodeBlocks(codeBlocks);
     });
   }, []);
 
-  useEffect(() => {
-    console.log("Code Block: ", codeBlocks);
-  }, [codeBlocks]);
-
   const handleClick = (e: any) => {
-    console.log(thisCodeBlocks);
     let codeBlock = thisCodeBlocks.find(
       (CodeBlock: any) => CodeBlock._id === e.target.dataset.id
     );

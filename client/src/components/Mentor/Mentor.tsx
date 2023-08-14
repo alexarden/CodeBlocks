@@ -31,7 +31,6 @@ function Mentor() {
     }
 
     socket.on("codeUpdate", (newCode: any) => {
-      console.log("Code from server arrived");
       setCode(newCode);
       sessionStorage.setItem("code", JSON.stringify(newCode));
     });

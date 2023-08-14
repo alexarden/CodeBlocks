@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     socket.emit("connections");
     socket.on("connections-response", (connectiosResponse) => {
-      console.log("connections: ", connectiosResponse);
       setConnectios(connectiosResponse);
       window.sessionStorage.setItem("connections", connectiosResponse);
       if (window.sessionStorage.getItem("role") === null) {
