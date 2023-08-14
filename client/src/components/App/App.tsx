@@ -1,7 +1,8 @@
 import { socket } from "../../services/service";
 import { useEffect, useState } from "react";
-import Mentor from "../Mentor";
-import Student from "../Student";
+import Mentor from "../Mentor/Mentor";
+import Student from "../Student/Student";
+import "./App.scss";
 
 function App() {
   const [connections, setConnectios] = useState(0);
@@ -9,7 +10,6 @@ function App() {
 
   useEffect(() => {
     socket.emit("connections");
-    socket.emit("codeBlocks");
     socket.on("connections-response", (connectiosResponse) => {
       console.log("connections: ", connectiosResponse);
       setConnectios(connectiosResponse);

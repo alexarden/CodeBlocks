@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { socket } from "../services/service";
+import { socket } from "../../services/service";
 import CodeMirror from "@uiw/react-codemirror";
 import { EditorView } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
+import styled from "styled-components";
+
+const Container = styled.div`
+  width: 800px;
+  .title {
+    text-align: center;
+    margin: 40px;
+  }
+`;
 
 function Mentor() {
   const [code, setCode] = useState("Hello there :)");
@@ -29,8 +38,8 @@ function Mentor() {
   }, []);
 
   return role === "Mentor" ? (
-    <div>
-      <div>Mentor</div>
+    <Container>
+      <div className="title">Mentor</div>
       <CodeMirror
         value={code}
         height="200px"
@@ -40,7 +49,7 @@ function Mentor() {
           EditorState.readOnly.of(true),
         ]}
       />
-    </div>
+    </Container>
   ) : (
     <div>No Mentor role...</div>
   );

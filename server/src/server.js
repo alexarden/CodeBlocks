@@ -1,23 +1,18 @@
-// const express = require("express");
 import express from "express";
-// const mongoose = require("mongoose");
 import mongoose from "mongoose";
-const app = express();
-// const http = require("http");
 import http from "http";
-// const { Server } = require("socket.io");
 import { Server } from "socket.io";
-// const cors = require("cors");
 import cors from "cors";
-// const dotenv = require("dotenv");
 import dotenv from "dotenv";
+import { getCodeBlocks, setCodeBlock } from "../controllers/codeBlock.mjs";
+
+const app = express();
 dotenv.config();
 app.use(cors);
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI;
 // const { getCodeBlocks } = require("../controllers/codeBlock.js");
-import { getCodeBlocks, setCodeBlock } from "../controllers/codeBlock.mjs";
 
 const io = new Server(server, {
   cors: {
@@ -45,9 +40,16 @@ io.on("connection", (socket) => {
     connections -= 1;
   });
 
-  socket.on("codeBlocks", async () => {
-    let response = await getCodeBlocks();
-    console.log(response);
+  socket.on("code-blocks", async () => {
+    try {
+      let response = await getCodeBlocks();
+      if (response) {
+        console.log(response);
+        socket.emit("code-blocks-response", response);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   connections += 1;
