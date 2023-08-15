@@ -21,7 +21,6 @@ const Container = styled.div`
 
 function CodeEditor() {
   const [code, setCode] = useState("Hello");
-  const [role, setRole] = useState("Student");
   const [codeBlocks, setCodeBlocks] = useState<any>(null);
 
   useEffect(() => {
@@ -61,7 +60,11 @@ function CodeEditor() {
   };
 
   return codeBlocks === null ? (
-    <ChooseCode codeBlocks={codeBlocks} setCodeBlocks={propSetCodeBlocks} />
+    <ChooseCode
+      codeBlocks={codeBlocks}
+      setCodeBlocks={propSetCodeBlocks}
+      setCode={setCode}
+    />
   ) : (
     <Container>
       <div className="title">

@@ -12,7 +12,18 @@ const CodeBlock = styled.div`
   }
 `;
 
-function CodeEditor(props: any) {
+type codeBlock = {
+  _id: string;
+  title: string;
+  code: string;
+  description: string;
+};
+
+function CodeEditor(props: {
+  codeBlocks: codeBlock;
+  setCodeBlocks: any;
+  setCode: any;
+}) {
   const [thisCodeBlocks, setThisCodeBlocks] = useState([]);
   const codeBlocks = props.codeBlocks;
   const setCodeBlocks = props.setCodeBlocks;
@@ -36,7 +47,7 @@ function CodeEditor(props: any) {
 
   const handleClick = (e: any) => {
     let codeBlock = thisCodeBlocks.find(
-      (CodeBlock: any) => CodeBlock._id === e.target.dataset.id
+      (CodeBlock: codeBlock) => CodeBlock._id === e.target.dataset.id
     );
     sessionStorage.setItem("code-block", JSON.stringify(codeBlock));
     setCodeBlocks(codeBlock);
@@ -52,7 +63,7 @@ function CodeEditor(props: any) {
       >
         Pick A Challenge
       </div>
-      {thisCodeBlocks.map((block: any) => (
+      {thisCodeBlocks.map((block: codeBlock) => (
         <CodeBlock key={block._id} data-id={block._id}>
           <Button
             variant="primary"

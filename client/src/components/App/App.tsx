@@ -9,6 +9,7 @@ function App() {
   const [role, setRole] = useState("");
 
   useEffect(() => {
+    // Set user as mentor or user based on connectios.
     socket.emit("connections");
     socket.on("connections-response", (connectiosResponse) => {
       setConnectios(connectiosResponse);
@@ -24,10 +25,6 @@ function App() {
       }
     });
   }, []);
-
-  const handleClick = () => {
-    socket.emit("connections");
-  };
 
   return (
     <div>

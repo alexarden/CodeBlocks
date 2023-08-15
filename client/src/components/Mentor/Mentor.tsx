@@ -16,7 +16,6 @@ const Container = styled.div`
 
 function Mentor() {
   const [code, setCode] = useState("Hello there :)");
-  const [role, setRole] = useState("Mentor");
 
   useEffect(() => {
     try {
@@ -30,13 +29,13 @@ function Mentor() {
       console.log(e);
     }
 
-    socket.on("codeUpdate", (newCode: any) => {
+    socket.on("codeUpdate", (newCode: string) => {
       setCode(newCode);
       sessionStorage.setItem("code", JSON.stringify(newCode));
     });
   }, []);
 
-  return role === "Mentor" ? (
+  return (
     <Container>
       <div className="title">Mentor</div>
       <CodeMirror
@@ -49,8 +48,6 @@ function Mentor() {
         ]}
       />
     </Container>
-  ) : (
-    <div>No Mentor role...</div>
   );
 }
 
