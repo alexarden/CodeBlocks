@@ -26,7 +26,9 @@ function App() {
     });
   }, []);
 
-  return (
+  return connections === 0 ? (
+    <div>Loading...</div>
+  ) : (
     <div>
       {window.sessionStorage.getItem("role") === "Mentor" ? (
         <Mentor />
