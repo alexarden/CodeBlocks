@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Mentor from "../Mentor/Mentor";
 import Student from "../Student/Student";
 import "./App.scss";
+import Spinner from "react-bootstrap/Spinner";
 
 function App() {
   const [connections, setConnectios] = useState(0);
@@ -27,7 +28,22 @@ function App() {
   }, []);
 
   return connections === 0 ? (
-    <div>Loading...</div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Spinner
+        animation="border"
+        style={{
+          margin: "16px",
+        }}
+      />
+      <div>Loading...</div>
+    </div>
   ) : (
     <div>
       {window.sessionStorage.getItem("role") === "Mentor" ? (
